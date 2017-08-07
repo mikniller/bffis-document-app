@@ -1,0 +1,8 @@
+/home/mini/develop/bffisApp/bin/Debug/netcoreapp1.1/bffisApp.deps.json
+/home/mini/develop/bffisApp/bin/Debug/netcoreapp1.1/bffisApp.runtimeconfig.json
+/home/mini/develop/bffisApp/bin/Debug/netcoreapp1.1/bffisApp.runtimeconfig.dev.json
+/home/mini/develop/bffisApp/bin/Debug/netcoreapp1.1/bffisApp.dll
+/home/mini/develop/bffisApp/bin/Debug/netcoreapp1.1/bffisApp.pdb
+/home/mini/develop/bffisApp/obj/Debug/netcoreapp1.1/bffisApp.AssemblyInfo.cs
+/home/mini/develop/bffisApp/obj/Debug/netcoreapp1.1/bffisApp.dll
+/home/mini/develop/bffisApp/obj/Debug/netcoreapp1.1/bffisApp.pdb
