@@ -5,3 +5,6 @@ images/
 #*.xls
 *.pdf
 *.xls#
+obj/Debug/
+obj/Release
+*.user
