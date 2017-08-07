@@ -2,6 +2,6 @@ bin/
 obj/debug
 images/
 .vscode/
-*.xls
+#*.xls
 *.pdf
 *.xls#
