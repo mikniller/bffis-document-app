@@ -37,6 +37,7 @@ public class DocumentReader
                                 h.Age = SafeGetString(excelReader,HoldIndex.Age);
                                 h.Description = SafeGetString(excelReader,HoldIndex.Description," Beskrivelse mangler");
                                 h.Responsible = SafeGetString(excelReader,HoldIndex.Responsible);
+                                h.Assistent = SafeGetString(excelReader,HoldIndex.Assistente);
                                 h.HalfSeason = SafeGetString(excelReader,HoldIndex.HalfSeason);
                                 h.StartDate = SafeGetString(excelReader,HoldIndex.StartDate);
                                 h.Price = SafeGetString(excelReader,HoldIndex.Price,"Ikke angivet");
@@ -98,6 +99,8 @@ public class Hold
 
     public string Description { get; set; }
     public string Responsible { get; set; }
+    public string Assistent { get; set; } 
+ 
     public string HalfSeason { get; set; }
 
     public string StartDate { get; set; }
@@ -147,15 +150,17 @@ public static class HoldIndex
    
     public static int Description { get; set; } = 9;
     public static int Responsible { get; set; } = 10;
-    public static int HalfSeason { get; set; } = 11;
+    public static int Assistente { get; set; } = 11;
+ 
+    public static int HalfSeason { get; set; } = 12;
 
-    public static int StartDate { get; set; } = 12;
-    public static int Price { get; set; } = 13;
+    public static int StartDate { get; set; } = 13;
+    public static int Price { get; set; } = 14;
 
     public static int Status { get; set; } = 15;
 
-    public static int Comments { get; set; } = 15;
+    public static int Comments { get; set; } = 16;
 
 
-     public static int Image { get; set; } = 16;
+     public static int Image { get; set; } = 17;
 }

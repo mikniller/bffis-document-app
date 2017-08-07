@@ -89,8 +89,9 @@ public class DocumentBuilder
         iTextSharp.text.List list = new iTextSharp.text.List(iTextSharp.text.List.UNORDERED, 10f);
         list.SetListSymbol("\u2022");
         list.IndentationLeft = 20f;
-        list.Add("Instruktør : " + team.Responsible);
-        list.Add("Tidspunkt : " + team.Time + " i " + team.Place);
+        list.Add("Ansvarlig Instruktør : " + team.Responsible);
+        list.Add("Yderligere Instruktør(er) : " + team.Assistent);
+        list.Add("Tidspunkt : " + team.WeekDay + " " + team.Time + " i " + team.Place);
         list.Add("Deltagere : " + team.Min + " til " + team.Max);
         list.Add("Pris : " + team.Price);
         list.Add("Opstart : " + team.StartDate);
@@ -102,17 +103,17 @@ public class DocumentBuilder
         Chunk descChunk = new Chunk("\n\n" + team.Description + "\n\n", descFont);
         p1.Add(descChunk);
 
-        if (string.IsNullOrWhiteSpace(team.HalfSeason) == false && team.HalfSeason.ToLowerInvariant() == "ja")
+        if (string.IsNullOrWhiteSpace(team.HalfSeason) == false && team.HalfSeason.ToLowerInvariant() != "nej")
         {
             Chunk halfSeason = new Chunk("Bemærk", boldText);
-            Chunk halfSeason2 = new Chunk(" Dette hold udbydes kun for en halv sæson", text);
+            Chunk halfSeason2 = new Chunk(" Dette hold udbydes kun for en halv sæson og løber indtil "+team.HalfSeason, text);
             p1.Add(halfSeason);
             p1.Add(halfSeason2);
         }
         
         if (string.IsNullOrWhiteSpace(team.Status))
         {
-            Chunk extraInfo = new Chunk("\nHoldet er endnu ikke helt på plads", textRed);
+            Chunk extraInfo = new Chunk("\nHoldet er endnu ikke helt på plads ( "+ team.Comments+")", textRed);
             
             p1.Add(extraInfo);
         }
