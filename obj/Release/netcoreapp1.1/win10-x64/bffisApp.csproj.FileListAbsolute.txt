@@ -1,0 +1,11 @@
+/home/mini/develop/github/bffisApp/bin/Release/netcoreapp1.1/win10-x64/hostpolicy.dll
+/home/mini/develop/github/bffisApp/bin/Release/netcoreapp1.1/win10-x64/hostfxr.dll
+/home/mini/develop/github/bffisApp/bin/Release/netcoreapp1.1/win10-x64/bffisApp.exe
+/home/mini/develop/github/bffisApp/bin/Release/netcoreapp1.1/win10-x64/bffisApp.deps.json
+/home/mini/develop/github/bffisApp/bin/Release/netcoreapp1.1/win10-x64/bffisApp.runtimeconfig.json
+/home/mini/develop/github/bffisApp/bin/Release/netcoreapp1.1/win10-x64/bffisApp.runtimeconfig.dev.json
+/home/mini/develop/github/bffisApp/bin/Release/netcoreapp1.1/win10-x64/bffisApp.dll
+/home/mini/develop/github/bffisApp/bin/Release/netcoreapp1.1/win10-x64/bffisApp.pdb
+/home/mini/develop/github/bffisApp/obj/Release/netcoreapp1.1/win10-x64/bffisApp.AssemblyInfo.cs
+/home/mini/develop/github/bffisApp/obj/Release/netcoreapp1.1/win10-x64/bffisApp.dll
+/home/mini/develop/github/bffisApp/obj/Release/netcoreapp1.1/win10-x64/bffisApp.pdb
