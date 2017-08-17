@@ -5,6 +5,7 @@ using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.draw;
+using System.Linq;
 
 public class DocumentBuilder
 {
@@ -16,9 +17,9 @@ public class DocumentBuilder
         doc.Open();
         AddHeader(year,doc);
         int cnt = 0;
-        foreach (var team in hold)
+        foreach (var team in hold.Where(h => h.Udskudt==false))
         {
-           cnt++;
+           cnt++;   
            AddTeam(team, doc, cnt % 2 == 1);
 
             if (cnt % 2 == 0)
