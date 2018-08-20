@@ -19,7 +19,7 @@ public class DocumentReader
                     bool isFirst = true;
                     while (excelReader.Read())
                     {
-                        if (excelReader.Name.ToLowerInvariant() == "hold")
+                        if (excelReader.Name.ToLowerInvariant().Trim() == "hold")
                         {
                             if (isFirst) // get column index 
                             {

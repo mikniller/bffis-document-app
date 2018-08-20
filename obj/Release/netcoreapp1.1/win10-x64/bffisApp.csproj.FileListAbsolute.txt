@@ -20,4 +20,5 @@ C:\dev\github\bffis-document-app\bin\Release\netcoreapp1.1\win10-x64\bffisApp.pd
 C:\dev\github\bffis-document-app\obj\Release\netcoreapp1.1\win10-x64\bffisApp.AssemblyInfo.cs
 C:\dev\github\bffis-document-app\obj\Release\netcoreapp1.1\win10-x64\bffisApp.dll
 C:\dev\github\bffis-document-app\obj\Release\netcoreapp1.1\win10-x64\bffisApp.pdb
-C:\dev\github\bffis-document-app\obj\Release\netcoreapp1.1\win10-x64\bffisApp.csprojResolveAssemblyReference.cache
+C:\dev\github\bffis-document-app\obj\Release\netcoreapp1.1\win10-x64\bffisApp.csproj.CoreCompileInputs.cache
+C:\dev\github\bffis-document-app\obj\Release\netcoreapp1.1\win10-x64\bffisApp.AssemblyInfoInputs.cache

@@ -11,7 +11,9 @@ C:\dev\github\bffis-document-app\bin\Debug\netcoreapp1.1\bffisApp.runtimeconfig.
 C:\dev\github\bffis-document-app\bin\Debug\netcoreapp1.1\bffisApp.runtimeconfig.dev.json
 C:\dev\github\bffis-document-app\bin\Debug\netcoreapp1.1\bffisApp.dll
 C:\dev\github\bffis-document-app\bin\Debug\netcoreapp1.1\bffisApp.pdb
-C:\dev\github\bffis-document-app\obj\Debug\netcoreapp1.1\bffisApp.csprojResolveAssemblyReference.cache
 C:\dev\github\bffis-document-app\obj\Debug\netcoreapp1.1\bffisApp.AssemblyInfo.cs
 C:\dev\github\bffis-document-app\obj\Debug\netcoreapp1.1\bffisApp.dll
 C:\dev\github\bffis-document-app\obj\Debug\netcoreapp1.1\bffisApp.pdb
+C:\dev\github\bffis-document-app\obj\Debug\netcoreapp1.1\bffisApp.csproj.CoreCompileInputs.cache
+C:\dev\github\bffis-document-app\obj\Debug\netcoreapp1.1\bffisApp.csprojAssemblyReference.cache
+C:\dev\github\bffis-document-app\obj\Debug\netcoreapp1.1\bffisApp.AssemblyInfoInputs.cache

@@ -38,8 +38,11 @@ namespace bffisApp
                 Console.Write(t.ToString());
             }
 
+            string year = DateTime.Now.Year + " - " + DateTime.Now.AddYears(1).Year;
+
             DocumentBuilder builder = new DocumentBuilder();
-            builder.Build(teams,"holdoversigt.pdf","2017 - 2018");
+            builder.Build(teams, "program.pdf", year);
+            builder.Build(teams, "holdoversigt.pdf", year,true);
 
         }
     }

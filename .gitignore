@@ -8,3 +8,6 @@ images/
 obj/Debug/
 obj/Release
 *.user
+/.vs/bffisApp/v15/Server/sqlite3
+/.vs/bffisApp/v15/sqlite3/storage.ide
+/obj/publish/win10-x64

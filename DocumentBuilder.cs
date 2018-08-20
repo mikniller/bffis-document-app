@@ -9,47 +9,138 @@ using System.Linq;
 
 public class DocumentBuilder
 {
-    public void Build(List<Hold> hold, string outputPath,string year)
+    public void Build(List<Hold> hold, string outputPath,string year,bool simple=false)
     {
 
         var doc = new Document();
         PdfWriter.GetInstance(doc, new FileStream(outputPath, FileMode.Create));
         doc.Open();
-        AddHeader(year,doc);
+        AddHeader(year,doc,simple);
         int cnt = 0;
+
+
+        iTextSharp.text.List list = new iTextSharp.text.List(iTextSharp.text.List.UNORDERED, 10f);
+        list.SetListSymbol("\u2022");
+        list.IndentationLeft = 20f;
+
         foreach (var team in hold.Where(h => h.Udskudt==false))
         {
-           cnt++;   
-           AddTeam(team, doc, cnt % 2 == 1);
+            if (simple == false)
+            {
+                cnt++;
 
-            if (cnt % 2 == 0)
-                doc.NewPage();
+                AddTeam(team, doc, cnt % 2 == 1);
+
+                if (cnt % 2 == 0)
+                    doc.NewPage();
+            }
+            else
+            {
+                addTeamSimple(team, doc, list);
+
+            }
 
         }
+
+        if(simple)
+        {
+            addFooter(doc);
+        }
+
         doc.Close();
     }
 
-    private void AddHeader(string year,Document doc) {
+    private void AddHeader(string year,Document doc, bool simple=false) {
        iTextSharp.text.Font header = FontFactory.GetFont("Arial", 22, iTextSharp.text.Font.BOLD, BaseColor.Black);
-       iTextSharp.text.Font subHeader = FontFactory.GetFont("Arial", 14, iTextSharp.text.Font.BOLD, BaseColor.Black);
-       Paragraph p = new Paragraph();
+        iTextSharp.text.Font subHeader = FontFactory.GetFont("Arial",14, iTextSharp.text.Font.BOLD, BaseColor.Black);
+        iTextSharp.text.Font subHeader2 = FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.NORMAL, BaseColor.Black);
+        Paragraph p = new Paragraph();
        p.Alignment = Element.ALIGN_CENTER;
        Chunk hdrChunk = new Chunk("Børnefritidsforeningen i Sydhavnen\n\n", header);
-       Chunk subChunk = new Chunk("Program "+year+ "\n\n\n\n", subHeader);
-       p.Add(hdrChunk);
-       p.Add(subChunk);
+       Chunk subChunk = new Chunk("Program "+year+ "\n\n", subHeader);
+       Chunk subChunk2 = new Chunk("Alle aktiviteter foregår på skolen i Sydhavnen, Støberigade 1, 2450 København SV\n\n", subHeader2);
 
-        
-            DottedLineSeparator dottedline = new DottedLineSeparator();
+        p.Add(hdrChunk);
+        p.Add(subChunk);
+
+        p.Add(subChunk2);
+
+
+        DottedLineSeparator dottedline = new DottedLineSeparator();
             dottedline.Offset = 0;
             dottedline.Gap = 2f;
             p.Add(dottedline);
             p.Add(new Chunk("\n\n\n"));
-        
 
 
-       doc.Add(p);
+        doc.Add(p);
     }
+
+
+    private void addTeamSimple(Hold team, Document doc,iTextSharp.text.List list)
+    {
+        iTextSharp.text.Font header = FontFactory.GetFont("Verdana", 12, iTextSharp.text.Font.BOLD, BaseColor.Black);
+        iTextSharp.text.Font text = FontFactory.GetFont("Verdana", 12, iTextSharp.text.Font.NORMAL, BaseColor.Black);
+        iTextSharp.text.Font smalltext = FontFactory.GetFont("Verdana", 10, iTextSharp.text.Font.ITALIC, BaseColor.Black);
+
+        if (string.IsNullOrWhiteSpace(team.Status))
+            header = FontFactory.GetFont("Verdana", 12, iTextSharp.text.Font.BOLD, BaseColor.Red);
+
+        Paragraph p = new Paragraph();
+        p.Alignment = Element.ALIGN_LEFT;
+
+        Chunk nameChunk = new Chunk(team.Name, header);
+        Chunk chunk = new Chunk(" for " + team.Age+"\n", text);
+        Chunk chunk1 = new Chunk("    " + team.WeekDay + " " + team.Time + " i " + team.Place + ", starter " + team.StartDate+ ", pris "+ team.Price+"\n" , smalltext);
+        p.Add(nameChunk);
+        p.Add(chunk);
+        p.Add(chunk1);
+        doc.Add(p);
+
+    }
+
+
+
+    private void addTeamSimple1(Hold team, Document doc, iTextSharp.text.List list)
+    {
+        iTextSharp.text.Font text = FontFactory.GetFont("Verdana", 12, iTextSharp.text.Font.NORMAL, BaseColor.Black);
+
+        if (string.IsNullOrWhiteSpace(team.Status))
+            text = FontFactory.GetFont("Verdana", 12, iTextSharp.text.Font.NORMAL, BaseColor.Red);
+
+        Paragraph p = new Paragraph();
+        p.Alignment = Element.ALIGN_LEFT;
+
+        Chunk chunk = new Chunk(team.Name + " for " + team.Age + " " + team.WeekDay + " " + team.Time + " i " + team.Place + ", Pris " + team.Price + "\n\n", text);
+        list.Add(chunk);
+
+    }
+
+
+
+    private void addFooter(Document doc)
+    {
+        iTextSharp.text.Font text = FontFactory.GetFont("Verdana", 12, iTextSharp.text.Font.NORMAL, BaseColor.Black);
+
+        Paragraph p = new Paragraph();
+        p.Alignment = Element.ALIGN_LEFT;
+
+
+        DottedLineSeparator dottedline = new DottedLineSeparator();
+        dottedline.Offset = 0;
+        dottedline.Gap = 2f;
+        //p.Add(dottedline);
+
+
+        Chunk chunk1 = new Chunk("\n\nFind det detaljerede program og andre oplysninger på http://www.bffis.dk", text);
+        p.Add(chunk1);
+        doc.Add(p);
+
+
+
+
+    }
+
 
     private void AddTeam(Hold team, Document doc, bool addSeparator)
     {
