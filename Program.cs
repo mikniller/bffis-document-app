@@ -23,14 +23,6 @@ namespace bffisApp
             // split into path and filename
             Directory.SetCurrentDirectory(path);
 
-
-
-            // figure out where the xls is.
-
-
-
-
-
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             DocumentReader reader = new DocumentReader();
             var teams = reader.Read(file);
@@ -42,7 +34,7 @@ namespace bffisApp
 
             DocumentBuilder builder = new DocumentBuilder();
             builder.Build(teams, "program.pdf", year);
-            builder.Build(teams, "holdoversigt.pdf", year,true);
+            builder.BuildSimple(teams, "holdoversigt.pdf", year);
 
         }
     }

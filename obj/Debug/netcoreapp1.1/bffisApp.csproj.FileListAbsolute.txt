@@ -15,5 +15,4 @@ C:\dev\github\bffis-document-app\obj\Debug\netcoreapp1.1\bffisApp.AssemblyInfo.c
 C:\dev\github\bffis-document-app\obj\Debug\netcoreapp1.1\bffisApp.dll
 C:\dev\github\bffis-document-app\obj\Debug\netcoreapp1.1\bffisApp.pdb
 C:\dev\github\bffis-document-app\obj\Debug\netcoreapp1.1\bffisApp.csproj.CoreCompileInputs.cache
-C:\dev\github\bffis-document-app\obj\Debug\netcoreapp1.1\bffisApp.csprojAssemblyReference.cache
 C:\dev\github\bffis-document-app\obj\Debug\netcoreapp1.1\bffisApp.AssemblyInfoInputs.cache

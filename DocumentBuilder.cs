@@ -9,13 +9,13 @@ using System.Linq;
 
 public class DocumentBuilder
 {
-    public void Build(List<Hold> hold, string outputPath,string year,bool simple=false)
+    public void Build(List<Hold> hold, string outputPath,string year)
     {
 
         var doc = new Document();
         PdfWriter.GetInstance(doc, new FileStream(outputPath, FileMode.Create));
         doc.Open();
-        AddHeader(year,doc,simple);
+        AddHeader(year,doc,false);
         int cnt = 0;
 
 
@@ -25,30 +25,75 @@ public class DocumentBuilder
 
         foreach (var team in hold.Where(h => h.Udskudt==false))
         {
-            if (simple == false)
-            {
                 cnt++;
 
                 AddTeam(team, doc, cnt % 2 == 1);
 
                 if (cnt % 2 == 0)
                     doc.NewPage();
-            }
-            else
-            {
-                addTeamSimple(team, doc, list);
-
-            }
-
         }
 
-        if(simple)
-        {
-            addFooter(doc);
-        }
+            addLargeFooter(doc);
 
         doc.Close();
     }
+
+
+    public void BuildSimple(List<Hold> hold, string outputPath, string year)
+    {
+
+        var doc = new Document();
+        PdfWriter.GetInstance(doc, new FileStream(outputPath, FileMode.Create));
+        doc.Open();
+        AddHeader(year, doc, true);
+        int cnt = 0;
+
+        iTextSharp.text.Font subHeader2 = FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.NORMAL, BaseColor.Black);
+        Paragraph p = new Paragraph();
+        p.Alignment = Element.ALIGN_LEFT;
+        Chunk subChunk2 = new Chunk("Børnefritidsforeningen i sydhavnen udbyder fritidsaktiviteter for alle børn i og omkring sydhavnen. Sæsonen løber typisk fra medio september til ultimo april og tilmelding til foreningens aktiviteter åbnes start september\n\nI år udbydes følgende aktiviteter:\n\n", subHeader2);
+        p.Add(subChunk2);
+
+
+        iTextSharp.text.List list = new iTextSharp.text.List(iTextSharp.text.List.UNORDERED, 10f);
+        list.SetListSymbol("\u2022");
+        list.IndentationLeft = 20f;
+
+
+        foreach (var team in hold.Where(h => h.Udskudt == false))
+        {
+            list.Add(team.Name + " for " + team.Age + " - " + team.WeekDay + " " + team.Time + " i " + team.Place);
+        }
+        p.Add(list);
+        doc.Add(p);
+
+        iTextSharp.text.Image img = null;
+
+        string imgPath = Path.Combine(Directory.GetCurrentDirectory(), "images/" + "banner.png");
+        if (File.Exists(imgPath))
+        {
+            img = iTextSharp.text.Image.GetInstance(imgPath);
+            img.ScaleToFit(500, 180f);
+            img.Alignment = iTextSharp.text.Image.TEXTWRAP | iTextSharp.text.Image.ALIGN_CENTER;
+            img.IndentationLeft = 1f;
+            img.SpacingAfter = 1f;
+            img.BorderWidthTop = 1f;
+            img.BorderColorTop = iTextSharp.text.BaseColor.White;
+            doc.Add(img);
+        }
+        else
+        {
+            Console.WriteLine("Kan ikke finde billedet banner.png");
+        }
+
+
+
+        addFooter(doc);
+
+        doc.Close();
+    }
+
+
 
     private void AddHeader(string year,Document doc, bool simple=false) {
        iTextSharp.text.Font header = FontFactory.GetFont("Arial", 22, iTextSharp.text.Font.BOLD, BaseColor.Black);
@@ -60,10 +105,51 @@ public class DocumentBuilder
        Chunk subChunk = new Chunk("Program "+year+ "\n\n", subHeader);
        Chunk subChunk2 = new Chunk("Alle aktiviteter foregår på skolen i Sydhavnen, Støberigade 1, 2450 København SV\n\n", subHeader2);
 
+
+        iTextSharp.text.Image img = null;
+        string imgPath = Path.Combine(Directory.GetCurrentDirectory(), "images/" + "play1.png");
+        if (File.Exists(imgPath))
+        {
+            img = iTextSharp.text.Image.GetInstance(imgPath);
+            img.ScaleToFit(50, 50f);
+            img.Alignment = iTextSharp.text.Image.TEXTWRAP | iTextSharp.text.Image.ALIGN_LEFT;
+            img.IndentationLeft = 1f;
+            img.SpacingAfter = 1f;
+            img.BorderWidthTop = 1f;
+            img.BorderColorTop = iTextSharp.text.BaseColor.White;
+            doc.Add(img);
+        }
+        else
+        {
+            Console.WriteLine("Kan ikke finde billedet banner.png");
+        }
+
+
+
         p.Add(hdrChunk);
         p.Add(subChunk);
 
         p.Add(subChunk2);
+
+
+        iTextSharp.text.Image img1 = null;
+        string img1Path = Path.Combine(Directory.GetCurrentDirectory(), "images/" + "play2.png");
+        if (File.Exists(img1Path))
+        {
+            img1 = iTextSharp.text.Image.GetInstance(img1Path);
+            img1.ScaleToFit(50, 50f);
+            img1.Alignment = iTextSharp.text.Image.TEXTWRAP | iTextSharp.text.Image.ALIGN_RIGHT;
+            img1.IndentationLeft = 1f;
+            img1.SpacingAfter = 1f;
+            img1.BorderWidthTop = 1f;
+            img1.BorderColorTop = iTextSharp.text.BaseColor.White;
+            doc.Add(img1);
+        }
+        else
+        {
+            Console.WriteLine("Kan ikke finde billedet banner.png");
+        }
+
 
 
         DottedLineSeparator dottedline = new DottedLineSeparator();
@@ -76,28 +162,6 @@ public class DocumentBuilder
         doc.Add(p);
     }
 
-
-    private void addTeamSimple(Hold team, Document doc,iTextSharp.text.List list)
-    {
-        iTextSharp.text.Font header = FontFactory.GetFont("Verdana", 12, iTextSharp.text.Font.BOLD, BaseColor.Black);
-        iTextSharp.text.Font text = FontFactory.GetFont("Verdana", 12, iTextSharp.text.Font.NORMAL, BaseColor.Black);
-        iTextSharp.text.Font smalltext = FontFactory.GetFont("Verdana", 10, iTextSharp.text.Font.ITALIC, BaseColor.Black);
-
-        if (string.IsNullOrWhiteSpace(team.Status))
-            header = FontFactory.GetFont("Verdana", 12, iTextSharp.text.Font.BOLD, BaseColor.Red);
-
-        Paragraph p = new Paragraph();
-        p.Alignment = Element.ALIGN_LEFT;
-
-        Chunk nameChunk = new Chunk(team.Name, header);
-        Chunk chunk = new Chunk(" for " + team.Age+"\n", text);
-        Chunk chunk1 = new Chunk("    " + team.WeekDay + " " + team.Time + " i " + team.Place + ", starter " + team.StartDate+ ", pris "+ team.Price+"\n" , smalltext);
-        p.Add(nameChunk);
-        p.Add(chunk);
-        p.Add(chunk1);
-        doc.Add(p);
-
-    }
 
 
 
@@ -121,6 +185,32 @@ public class DocumentBuilder
     private void addFooter(Document doc)
     {
         iTextSharp.text.Font text = FontFactory.GetFont("Verdana", 12, iTextSharp.text.Font.NORMAL, BaseColor.Black);
+        iTextSharp.text.Font textLink = FontFactory.GetFont("Verdana", 14, iTextSharp.text.Font.UNDERLINE, BaseColor.Blue);
+
+        Paragraph p = new Paragraph();
+        p.Alignment = Element.ALIGN_LEFT;
+
+
+        DottedLineSeparator dottedline = new DottedLineSeparator();
+        dottedline.Offset = 0;
+        dottedline.Gap = 2f;
+        //p.Add(dottedline);
+
+
+        Chunk chunk1 = new Chunk("\n\nDet detaljerede program og andre oplysninger på foreningens hjemmeside ", text);
+        Chunk chunk2 = new Chunk("http://www.bffis.dk", textLink);
+
+        p.Add(chunk1);
+        p.Add(chunk2);
+        doc.Add(p);
+
+    }
+
+
+
+    private void addLargeFooter(Document doc)
+    {
+        iTextSharp.text.Font text = FontFactory.GetFont("Verdana", 12, iTextSharp.text.Font.NORMAL, BaseColor.Black);
 
         Paragraph p = new Paragraph();
         p.Alignment = Element.ALIGN_LEFT;
@@ -133,7 +223,12 @@ public class DocumentBuilder
 
 
         Chunk chunk1 = new Chunk("\n\nFind det detaljerede program og andre oplysninger på http://www.bffis.dk", text);
+
+        Chunk chunk2 = new Chunk("\n\nTilmelding foretages på http://www.bffis.dk/Tilmelding.aspx", text);
+
+
         p.Add(chunk1);
+        p.Add(chunk2);
         doc.Add(p);
 
 
